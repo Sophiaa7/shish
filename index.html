@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shish Beauty</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff5f8;
+}
+
+/* Header */
+header {
+    background: #ff4d88;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 40px;
+}
+
+.hero h1 {
+    color: #ff4d88;
+}
+
+/* Products */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 30px;
+}
+
+.product {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.product:hover {
+    transform: scale(1.05);
+}
+
+.product img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+button {
+    background: #ff4d88;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Cart */
+.cart {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    width: 200px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #ff4d88;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Shish Beauty</h1>
+<p>Glow with confidence ✨</p>
+</header>
+
+<div class="hero">
+<h1>Your Beauty, Your Power</h1>
+<p>Shop your favorite looks</p>
+</div>
+
+<!-- CART -->
+<div class="cart">
+<h3>Cart 🛒</h3>
+<ul id="cart-list"></ul>
+<p><strong>Total: ₦<span id="total">0</span></strong></p>
+<button onclick="checkout()">Order on WhatsApp</button>
+</div>
+
+<!-- PRODUCTS -->
+<div class="products">
+
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<h3>Lip Gloss</h3>
+<p>₦3000</p>
+<button onclick="addToCart('Lip Gloss', 3000)">Add to Cart</button>
+</div>
+
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<h3>Foundation</h3>
+<p>₦5500</p>
+<button onclick="addToCart('Foundation', 5500)">Add to Cart</button>
+</div>
+
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<h3>Blush</h3>
+<p>₦4000</p>
+<button onclick="addToCart('Blush', 4000)">Add to Cart</button>
+</div>
+
+</div>
+
+<footer>
+<p>© 2026 Shish Beauty</p>
+</footer>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(name, price) {
+    cart.push({name, price});
+    total += price;
+    updateCart();
+}
+
+function updateCart() {
+    let list = document.getElementById("cart-list");
+    list.innerHTML = "";
+
+    cart.forEach(item => {
+        let li = document.createElement("li");
+        li.textContent = item.name + " - ₦" + item.price;
+        list.appendChild(li);
+    });
+
+    document.getElementById("total").textContent = total;
+}
+
+function checkout() {
+    if(cart.length === 0){
+        alert("Cart is empty!");
+        return;
+    }
+
+    let message = "Hello, I want to order:%0A";
+
+    cart.forEach(item => {
+        message += item.name + " - ₦" + item.price + "%0A";
+    });
+
+    message += "Total: ₦" + total;
+
+    let phone = "234XXXXXXXXXX"; // replace with your number
+    let url = "https://wa.me/" + phone + "?text=" + message;
+
+    window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
